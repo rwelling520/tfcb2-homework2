@@ -1,15 +1,15 @@
 ---
-title: "data-analysis"
+title: "Homework 2"
 author: "Rachel Wellington"
 date: "10/15/2018"
-output: html_document
+output: github_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## TFCB 2018 Homework 2, Problem 8: Analysis of Data from `data/` Folder 
+
+```{r}
+library(tidyverse)
+```
 
 ```{r}
 data <- read_tsv( "../data/example_dataset_2.tsv") %>%
