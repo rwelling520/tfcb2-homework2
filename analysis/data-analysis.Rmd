@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 data <- read_tsv( "../data/example_dataset_2.tsv") %>%
   print()
 ```
+
 ```{r}
 data <- data %>%
   mutate(mean_ratio = mean_yfp / mean_rfp) %>% 
@@ -63,14 +64,6 @@ data2 %>%
   print()
 ```
 
-```{r}
-data2 %>%
-  group_by(strain) %>%
-  summarize(mean_yfp = mean(yfp), mean_rfp = mean(rfp),
-          se_yfp = sd(yfp) / sqrt(n()), 
-          se_rfp = sd(rfp) / sqrt(n())) %>%
-  print()
-```
 
 ```{r}
 data2 %>%
