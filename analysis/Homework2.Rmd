@@ -2,78 +2,127 @@
 title: "Homework 2"
 author: "Rachel Wellington"
 date: "10/15/2018"
-output: github_document
+output: 
+   md_document:
+   varient: markdown_github
 ---
 
 ## TFCB 2018 Homework 2, Problem 8: Analysis of Data from `data/` Folder 
 
 ```{r}
+#Load the required tidyverse package
 library(tidyverse)
 ```
 
 ```{r}
+#Create a dataframe fromt he Example Dataset 2 File under `data/`
 data <- read_tsv( "../data/example_dataset_2.tsv") %>%
+#Display the first 10 rows of the resulting Example Dataset 2 dataframe
   print()
 ```
 
 ```{r}
+#Re-call the dataframe created for Example Dataset 2 for use in a series
+#of functions to create an edited version
 data <- data %>%
+#Add a column `mean_ratio` displaying the ratio of `mean_yfp` to `mean_rfp`
   mutate(mean_ratio = mean_yfp / mean_rfp) %>% 
+#Display the first 10 rows of the updated dataframe that includes `mean_ratio`
   print()
 ```
 
 ```{r}
+#Set the `data` dataframe of Example Dataset 2 as the dataframe for use in 
+#the subsequent functions
 data %>%
+#Edit the values in the column `mean_ratio` to be rounded to include only two
+#decimal places
   mutate(mean_ratio = round(mean_ratio, 2)) %>% 
+#Display a snapshot of the updated `data` dataframe for Example Dataset 2
   print()
 ```
 
 ```{r}
+#Store the annotations found in Example Dataset 3 in a dataframe `annotation`
 annotations <- read_tsv("../data/example_dataset_3.tsv") %>% 
+#Display a snapshot of the `annotations` dataframe
   print()
 ```
 
 ```{r}
+#Set the previously updated `data` dataframe as the input dataframe for all
+#following functions
 data %>%
+#Join `data` with the `annotations` dataframe based on common values in the
+#"strain" column
   inner_join(annotations, by = "strain") %>% 
+#Display a snapshot of the joined dataframe
   print()
 ```
 
 ```{r}
+#Set the `data` dataframe as the input dataframe for all following functions
 data %>%
+#Calculate a summary of the maximum `mean_yfp` and `mean_rfp` for `data`
   summarize(max_yfp = max(mean_yfp),
             max_rfp = max(mean_rfp)) %>%
+#Display the maximum `mean_yfp` and `mean_rfp` for all samples in `data`
   print()
 ```
 
 ```{r}
+#Store Example Dataset 4 found in the `data/` folder as a dataframe
+#called `data2`
 data2 <- read_tsv("../data/example_dataset_4.tsv") %>% 
+#Display a snapshot of the`data2` dataset
   print(n = 10)
 ```
 
 ```{r}
+#Set the `data2` dataframe as the input dataframe for all following functions
+#Note: first of three expanded examples
 data2 %>% 
+#Reorganize the table based on values in the `strain` column
   group_by(strain) %>% 
+#Display a snapshot of the updated `data2`
   print(n = 10)
 ```
 
 ```{r}
+#Set the `data2` dataframe as the input dataframe for all following functions
+#Note: second of three expanded examples
 data2 %>%
+#Reorganize the table based on values in the `strain` column
   group_by(strain) %>%
+#Create a summary of the dataframe containing the mean of the values in
+#the `yfp` and `rfp` columns
   summarize(mean_yfp = mean(yfp), mean_rfp = mean(rfp)) %>% 
+#Display the summary calculations (mean values of `yfp` and `rfp`)
   print()
 ```
 
 
 ```{r}
+#Set the `data2` dataframe as the input dataframe for all following functions
+#Note: third of three expanded examples
 data2 %>%
+#Reorganize the table based on values in the `strain` column
   group_by(strain) %>%
+#Create a summary of the dataframe containing the mean of the values in
+#the `yfp` and `rfp` columns
   summarize(mean_yfp = mean(yfp), mean_rfp = mean(rfp)) %>% 
+#Add a column to the summary table displaying the ratio of the calculated
+#`mean_yfp` to `mean_rfp`
   mutate(mean_ratio = mean_yfp / mean_rfp) %>% 
+#Join the previous `annotations` dataframe with the `data2` based on
+#common values shared with `data2` in `strain` column
   left_join(annotations, by = "strain") %>%
+#Create a plot displaying mean_ratio versus kozak_region and group based on
+#the insert_sequence (which are also color coded)
   ggplot(aes(x = kozak_region, y = mean_ratio,
              color = insert_sequence, group = insert_sequence)) +
+#display as a line plot
   geom_line() +
+#add points for each value used to determine the line
   geom_point()
 ```
-
